@@ -1,16 +1,48 @@
-# Testing talk
+# Código Bonito - Product API
 
-## Version of the talk for a class of software engineering at Famaf (August 2023 and September 2024):
+## Description
 
-Here are the [slides](https://docs.google.com/presentation/d/1oCjRJ4LLSHKKOrSS4IokoVvO-1m23chiaZIuaTCbESA/edit?usp=sharing).
+A small REST API to manage products. The objective is to show the good guidelines for creating pretty code and teach the different layers that a project has.
 
+**NOTE**: This project is a refactoring of the original [project](https://github.com/matiaslee/testing_talk) created for various talks
 
-[Here is a poll]() to know better my student and to discuss a little about situation in Argentina. 
+## Requirements
 
-## Version of the talk for a Python Event in Córdoba Argentina (June 2023):
+- Python 3.10.12 or higher
+- [Poetry](https://python-poetry.org/docs/)
 
-This repo stores the code used for [a talk about testing in a python](https://www.meetup.com/es-ES/buenos-aires-python-meetup/events/293425518/) event in my city. I will also use them as teaching material for a Software Engineer class at [FaMAF](https://www.famaf.unc.edu.ar/).
+---
 
-Here is the [slides of the talk](https://docs.google.com/presentation/d/1DeXQj5orCryapAgO2kH1A8D6Dzx-KBmhQz648t6ww64/edit?usp=sharing)
+## Installation
 
-Here is [the video of the talk](https://www.youtube.com/watch?v=AvObydZQ12k&ab_channel=PyAr-PythonArgentina)
+### 1. Install Poetry
+
+```bash
+curl -sSL https://install.python-poetry.org | python3  -
+```
+
+Make sure `poetry` is in your PATH. You may need to restart your terminal.
+
+### 2. Install dependencies
+
+```bash
+poetry install
+```
+
+This installs all project dependencies listed in `pyproject.toml`.
+
+## Running the app
+
+Make sure you are in the root folder (`/src`) of the project.
+Create a `.env` file in the root folder with the following content:
+
+```env
+ENV=development
+#production is also a valid option
+```
+
+Then run the following command to start the app:
+
+```bash
+poetry run uvicorn main:app --reload
+```
