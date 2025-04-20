@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from layer_3_api.products import router as products_router
 from layer_3_api.products_with_usd_prices import (
     router as products_with_usd_prices_router,
 )
 
 
+init_pony()
 app = FastAPI()
 
 app.include_router(products_router, prefix="/products", tags=["products"])

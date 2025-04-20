@@ -313,6 +313,18 @@ files = [
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
+name = "pony"
+version = "0.7.19"
+description = "Pony Object-Relational Mapper"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "pony-0.7.19-py3-none-any.whl", hash = "sha256:5112b4cf40d3f24e93ae66dc5ab7dc6813388efa870e750928d60dc699873cf5"},
+    {file = "pony-0.7.19.tar.gz", hash = "sha256:f7f83b2981893e49f7f18e8def52ad8fa8f8e6c5f9583b9aaed62d4d85036a0f"},
+]
+
+[[package]]
 name = "pydantic"
 version = "2.11.3"
 description = "Data validation using Python type hints"
@@ -697,4 +709,4 @@ standard = ["colorama (>=0.4) ; sys_platform == \"win32\"", "httptools (>=0.6.3)
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "0305a2a053d173a0ef69d5ca8d25b4ce4390c36b03f48d34a28b2ac33ab1f129"
+content-hash = "b763f1bdd02c45431ebeef6b3b037270f7c0e286ade835e57fbae34bb0807a69"

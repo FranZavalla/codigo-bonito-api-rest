@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from layer_0_db_definition.database import get_database
+from layer_0_db_definition.database_sqlachemy import get_database
 from layer_0_db_definition.schema import ProductCreate
-from layer_1_repositories.product import ProductRepository
+from layer_1_repositories.product_sqlachemy import ProductRepository
 from sqlalchemy.orm import Session
 
 router = APIRouter()

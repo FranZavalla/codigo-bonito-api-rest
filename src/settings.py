@@ -12,3 +12,4 @@ class Settings(BaseSettings):
 settings = Settings()
 
 DATABASE_FILENAME = f"database_{settings.ENV}.sqlite"
+DATABASE_URL = f"sqlite:///{DATABASE_FILENAME}"

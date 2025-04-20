@@ -1,4 +1,5 @@
-from layer_1_repositories.product import ProductRepository
+from layer_1_repositories.product_sqlachemy import ProductRepository
+# from layer_1_repositories.product_pony import ProductRepository
 from layer_0_db_definition.schema import ProductReadWithUSDPrice
 from .connectors.bluelytics_connector import BluelyticsConnector
 from typing import List
