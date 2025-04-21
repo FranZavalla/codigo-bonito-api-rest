@@ -3,10 +3,20 @@ from layer_3_api.products import router as products_router
 from layer_3_api.products_with_usd_prices import (
     router as products_with_usd_prices_router,
 )
+from settings import Settings
 
+def init_db():
+    print("Initializing database...")
+    if settings.ORM == "sqlalchemy":
+        init_sqlalchemy()
+    else:
+        init_pony()
 
-init_pony()
 app = FastAPI()
+
+@app.on_event("startup")
+def on_startup():
+    init_db()
 
 app.include_router(products_router, prefix="/products", tags=["products"])
 app.include_router(
