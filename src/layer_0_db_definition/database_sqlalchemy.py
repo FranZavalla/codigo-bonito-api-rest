@@ -7,8 +7,10 @@ from sqlalchemy.orm import sessionmaker
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 def init_sqlalchemy():
     Base.metadata.create_all(bind=engine)
+
 
 def get_database():
     db = SessionLocal()

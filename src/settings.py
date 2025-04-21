@@ -3,8 +3,8 @@ from pydantic import Field
 
 
 class Settings(BaseSettings):
-    ENV: str = Field(default="development", enumerate=["development", "production"])
     ORM: str = Field(default="sqlalchemy", enumerate=["sqlalchemy", "ponyorm"])
+    DATABASE_PATH: str = Field(min_length=1)
 
     class Config:
         env_file = ".env"
@@ -12,5 +12,4 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-DATABASE_FILENAME = f"database_{settings.ENV}.sqlite"
-DATABASE_URL = f"sqlite:///{DATABASE_FILENAME}"
+DATABASE_URL = f"sqlite:///{settings.DATABASE_PATH}"
