@@ -3,7 +3,6 @@ from layer_1_repositories.product_sqlachemy import ProductRepository
 from layer_0_db_definition.schema import ProductReadWithUSDPrice
 from .connectors.bluelytics_connector import BluelyticsConnector
 from typing import List
-from .utils.number import truncate
 
 
 class ProductWithDollarBluePrices:
@@ -38,9 +37,7 @@ class ProductWithDollarBluePrices:
             id=product.id,
             name=product.name,
             price=product.price,
-            usd_price=truncate(
-                product.price / dollar_blue_price,
-            ),
+            usd_price=round(product.price / dollar_blue_price, 2),
         )
 
     def get_products(self) -> List[ProductReadWithUSDPrice]:
@@ -66,7 +63,7 @@ class ProductWithDollarBluePrices:
                 id=product.id,
                 name=product.name,
                 price=product.price,
-                usd_price=truncate(product.price / dollar_blue_price, 2),
+                usd_price=round(product.price / dollar_blue_price, 2),
             )
             for product in products
         ]
