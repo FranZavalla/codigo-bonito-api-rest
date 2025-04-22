@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from app.layer_0_db_definition.schema import ProductCreate, ProductRead
+from app.layer_0_db_definition.schema import ProductRequestData, ProductResponse
 
 
 class AbstractProductRepository(ABC):
     @abstractmethod
-    def get_all(self) -> List[ProductRead]:
+    def get_all(self) -> List[ProductResponse]:
         """
         Retrieve all Product rows from the database.
 
@@ -16,7 +16,7 @@ class AbstractProductRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_id(self, product_id: int) -> ProductRead:
+    def get_by_id(self, product_id: int) -> ProductResponse:
         """
         Retrieve a product by its unique identifier.
 
@@ -32,7 +32,7 @@ class AbstractProductRepository(ABC):
         pass
 
     @abstractmethod
-    def create(self, product: ProductCreate) -> ProductRead:
+    def create(self, product: ProductRequestData) -> ProductResponse:
         """
         Create a new product in the database.
 

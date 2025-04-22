@@ -1,12 +1,12 @@
 from pydantic import BaseModel
 
 
-class ProductCreate(BaseModel):
+class ProductRequestData(BaseModel):
     name: str
     price: float
 
 
-class ProductRead(BaseModel):
+class ProductResponse(BaseModel):
     id: int
     name: str
     price: float
@@ -15,5 +15,5 @@ class ProductRead(BaseModel):
         from_attributes = True
 
 
-class ProductReadWithUSDPrice(ProductRead):
+class ProductResponseWithUSDPrice(ProductResponse):
     usd_price: float

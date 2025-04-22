@@ -1,6 +1,6 @@
 from typing import List
 
-from app.layer_0_db_definition.schema import ProductReadWithUSDPrice
+from app.layer_0_db_definition.schema import ProductResponseWithUSDPrice
 from app.layer_1_data_access.connectors.bluelytics_connector import BluelyticsConnector
 from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
@@ -16,7 +16,7 @@ class ProductWithDollarBluePrices:
         self.product_repository = product_repository
         self.dollar_blue_connector = dollar_blue_connector
 
-    def get_product(self, product_id: int) -> ProductReadWithUSDPrice:
+    def get_product(self, product_id: int) -> ProductResponseWithUSDPrice:
         """
         Retrieves a product by its ID and calculates its price in USD using the dollar blue exchange rate.
 
@@ -24,7 +24,7 @@ class ProductWithDollarBluePrices:
             product_id (int): The ID of the product to retrieve.
 
         Returns:
-            ProductReadWithUSDPrice: An object containing the product details along with its price in USD.
+            ProductResponseWithUSDPrice: An object containing the product details along with its price in USD.
 
         Raises:
             ValueError: If the product is not found or if there is an error fetching the dollar blue price.
@@ -35,19 +35,19 @@ class ProductWithDollarBluePrices:
         except ValueError as e:
             raise e
 
-        return ProductReadWithUSDPrice(
+        return ProductResponseWithUSDPrice(
             id=product.id,
             name=product.name,
             price=product.price,
             usd_price=round(product.price / dollar_blue_price, 2),
         )
 
-    def get_products(self) -> List[ProductReadWithUSDPrice]:
+    def get_products(self) -> List[ProductResponseWithUSDPrice]:
         """
         Retrieves a list of products with their prices converted to USD using the dollar blue exchange rate.
 
         Returns:
-            List[ProductReadWithUSDPrice]: A list of products, each containing the product ID, name,
+            List[ProductResponseWithUSDPrice]: A list of products, each containing the product ID, name,
             original price, and price converted to USD.
 
         Raises:
@@ -61,7 +61,7 @@ class ProductWithDollarBluePrices:
             raise e
 
         return [
-            ProductReadWithUSDPrice(
+            ProductResponseWithUSDPrice(
                 id=product.id,
                 name=product.name,
                 price=product.price,
