@@ -1,9 +1,10 @@
-from layer_1_data_access.repositories.Product.product_abstract import (
-    AbstractProductRepository,
-)
-from layer_0_db_definition.schema import ProductReadWithUSDPrice
-from layer_1_data_access.connectors.bluelytics_connector import BluelyticsConnector
 from typing import List
+
+from layer_0_db_definition.schema import ProductReadWithUSDPrice
+from layer_1_data_access.connectors.bluelytics_connector import \
+    BluelyticsConnector
+from layer_1_data_access.repositories.Product.product_abstract import \
+    AbstractProductRepository
 
 
 class ProductWithDollarBluePrices:

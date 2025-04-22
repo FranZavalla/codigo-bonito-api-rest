@@ -1,6 +1,8 @@
 from pony.orm import db_session
-from .models_ponyorm import db
+
 from settings import settings
+
+from .models_ponyorm import db
 
 
 def init_pony():

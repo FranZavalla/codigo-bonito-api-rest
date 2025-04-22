@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from layer_0_db_definition.database_sqlalchemy import get_database
-from layer_1_data_access.repositories.Product.utils import get_product_repository
-from layer_1_data_access.connectors.bluelytics_connector import BluelyticsConnector
-from layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePrices
 
+from layer_0_db_definition.database_sqlalchemy import get_database
+from layer_1_data_access.connectors.bluelytics_connector import \
+    BluelyticsConnector
+from layer_1_data_access.repositories.Product.utils import \
+    get_product_repository
+from layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePrices
 
 router = APIRouter()
 

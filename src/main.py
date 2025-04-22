@@ -1,11 +1,11 @@
-from fastapi import FastAPI, Depends
-from settings import settings
+from fastapi import Depends, FastAPI
+
 from layer_0_db_definition.database_ponyorm import init_pony
 from layer_0_db_definition.database_sqlalchemy import init_sqlalchemy
 from layer_3_api.products import router as products_router
-from layer_3_api.products_with_usd_prices import (
-    router as products_with_usd_prices_router,
-)
+from layer_3_api.products_with_usd_prices import \
+    router as products_with_usd_prices_router
+from settings import settings
 
 
 def init_db():

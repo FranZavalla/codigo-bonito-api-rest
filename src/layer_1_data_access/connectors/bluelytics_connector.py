@@ -1,7 +1,9 @@
-from pydantic import BaseModel
-from .dollar_connector import DollarConnector
 from datetime import datetime
+
 import requests
+from pydantic import BaseModel
+
+from .dollar_connector import DollarConnector
 
 
 class ExchangeRate(BaseModel):
