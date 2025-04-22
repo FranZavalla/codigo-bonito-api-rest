@@ -2,6 +2,10 @@ from fastapi import FastAPI, Depends
 from settings import settings
 from layer_0_db_definition.database_ponyorm import init_pony
 from layer_0_db_definition.database_sqlalchemy import init_sqlalchemy
+from layer_3_api.products import router as products_router
+from layer_3_api.products_with_usd_prices import (
+    router as products_with_usd_prices_router,
+)
 
 
 def init_db():
@@ -13,6 +17,13 @@ def init_db():
 
 
 app = FastAPI()
+
+app.include_router(products_router, prefix="/products", tags=["products"])
+app.include_router(
+    products_with_usd_prices_router,
+    prefix="/products_with_usd_prices",
+    tags=["products"],
+)
 
 
 @app.on_event("startup")

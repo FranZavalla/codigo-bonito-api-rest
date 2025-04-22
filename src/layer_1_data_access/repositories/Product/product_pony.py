@@ -11,14 +11,14 @@ from .product_abstract import AbstractProductRepository
 class ProductRepository(AbstractProductRepository):
     @db_session
     def get_all(self) -> List[Product]:
-        return list(select(p for p in Product))
+        return [p.to_dict() for p in select(p for p in Product)]
 
     @db_session
     def get_by_id(self, product_id: int) -> Product:
         product = Product.get(id=product_id)
         if not product:
             raise ValueError("Product does not exist")
-        return product
+        return product.to_dict()
 
     @db_session
     def create(self, product: ProductCreate) -> Product:

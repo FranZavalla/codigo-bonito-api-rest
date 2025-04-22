@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from layer_0_db_definition.database_sqlachemy import get_database
-from layer_1_repositories.product_sqlachemy import ProductRepository
-from layer_2_logic.connectors.bluelytics_connector import BluelyticsConnector
+from layer_0_db_definition.database_sqlalchemy import get_database
+from layer_1_data_access.repositories.Product.utils import get_product_repository
+from layer_1_data_access.connectors.bluelytics_connector import BluelyticsConnector
 from layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePrices
 
 
@@ -13,7 +13,7 @@ router = APIRouter()
 def get_products_with_usd_price(db: Session = Depends(get_database)):
     try:
         dollar_blue_repository = ProductWithDollarBluePrices(
-            ProductRepository(db), BluelyticsConnector()
+            get_product_repository(db), BluelyticsConnector()
         )
 
         return dollar_blue_repository.get_products()
@@ -25,7 +25,7 @@ def get_products_with_usd_price(db: Session = Depends(get_database)):
 def get_product_with_usd_price(product_id: int, db: Session = Depends(get_database)):
     try:
         dollar_blue_repository = ProductWithDollarBluePrices(
-            ProductRepository(db), BluelyticsConnector()
+            get_product_repository(db), BluelyticsConnector()
         )
 
         return dollar_blue_repository.get_product(product_id)

@@ -1,14 +1,15 @@
-from layer_1_repositories.product_sqlachemy import ProductRepository
-# from layer_1_repositories.product_pony import ProductRepository
+from layer_1_data_access.repositories.Product.product_abstract import (
+    AbstractProductRepository,
+)
 from layer_0_db_definition.schema import ProductReadWithUSDPrice
-from .connectors.bluelytics_connector import BluelyticsConnector
+from layer_1_data_access.connectors.bluelytics_connector import BluelyticsConnector
 from typing import List
 
 
 class ProductWithDollarBluePrices:
     def __init__(
         self,
-        product_repository: ProductRepository,
+        product_repository: AbstractProductRepository,
         dollar_blue_connector: BluelyticsConnector,
     ):
         self.product_repository = product_repository
