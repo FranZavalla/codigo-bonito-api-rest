@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from layer_0_db_definition.schema import ProductCreate, ProductRead
+from app.layer_0_db_definition.schema import ProductCreate, ProductRead
 
 
 class AbstractProductRepository(ABC):

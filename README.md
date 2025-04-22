@@ -33,16 +33,17 @@ This installs all project dependencies listed in `pyproject.toml`.
 
 ## Running the app
 
-Make sure you are in the root folder (`/src`) of the project.
-Create a `.env` file in the root folder with the following content:
+Make sure you are in the root of the project.
+Create a `.env` file in the `app` folder with the following content:
 
 ```env
-ENV=development
-#production is also a valid option
+DATABASE_PATH=path_to_your_database.sqlite
+ORM=sqlalchemy
+# ORM=ponyorm
 ```
 
-Then run the following command to start the app:
+Then run the following command at the root of the project to start the app:
 
 ```bash
-poetry run uvicorn main:app --reload
+poetry run uvicorn app.main:app --reload
 ```

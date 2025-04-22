@@ -2,10 +2,12 @@ from typing import List
 
 from pony.orm import commit, db_session, select
 
-from layer_0_db_definition.models_ponyorm import Product
-from layer_0_db_definition.schema import ProductCreate
+from app.layer_0_db_definition.models_ponyorm import Product
+from app.layer_0_db_definition.schema import ProductCreate
 
-from .product_abstract import AbstractProductRepository
+from app.layer_1_data_access.repositories.Product.product_abstract import (
+    AbstractProductRepository,
+)
 
 
 class ProductRepository(AbstractProductRepository):

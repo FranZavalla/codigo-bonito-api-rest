@@ -2,7 +2,7 @@ from typing import Optional, Union
 
 from sqlalchemy.orm import Session
 
-from settings import settings
+from app.settings import settings
 
 
 def get_product_repository(db: Optional[Session] = None):
@@ -16,13 +16,15 @@ def get_product_repository(db: Optional[Session] = None):
         Union[SQLARepo, PonyRepo]: An instance of the appropriate product repository.
     """
     if settings.ORM == "sqlalchemy":
-        from layer_1_data_access.repositories.Product.product_sqlachemy import \
-            ProductRepository as SQLAProductRepo
+        from app.layer_1_data_access.repositories.Product.product_sqlachemy import (
+            ProductRepository as SQLAProductRepo,
+        )
 
         return SQLAProductRepo(db)
     elif settings.ORM == "ponyorm":
-        from layer_1_data_access.repositories.Product.product_pony import \
-            ProductRepository as PonyProductRepo
+        from app.layer_1_data_access.repositories.Product.product_pony import (
+            ProductRepository as PonyProductRepo,
+        )
 
         return PonyProductRepo()
     else:

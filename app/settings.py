@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     DATABASE_PATH: str = Field(min_length=1)
 
     class Config:
-        env_file = ".env"
+        env_file = "./app/.env"
 
 
 settings = Settings()

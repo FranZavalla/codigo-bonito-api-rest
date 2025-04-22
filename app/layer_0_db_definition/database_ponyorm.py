@@ -1,8 +1,8 @@
 from pony.orm import db_session
 
-from settings import settings
+from app.settings import settings
 
-from .models_ponyorm import db
+from app.layer_0_db_definition.models_ponyorm import db
 
 
 def init_pony():
