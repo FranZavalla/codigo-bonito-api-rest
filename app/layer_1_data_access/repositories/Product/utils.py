@@ -1,11 +1,11 @@
-from typing import Optional, Union
+from typing import Optional
 
 from sqlalchemy.orm import Session
 
 from app.settings import settings
 
 
-def get_product_repository(db: Optional[Session] = None):
+def select_product_repository(db: Optional[Session] = None):
     """
     Returns the appropriate product repository based on the configuration settings.
 
@@ -17,15 +17,15 @@ def get_product_repository(db: Optional[Session] = None):
     """
     if settings.ORM == "sqlalchemy":
         from app.layer_1_data_access.repositories.Product.product_sqlachemy import (
-            ProductRepository as SQLAProductRepo,
+            SQLAlchemyProductRepository,
         )
 
-        return SQLAProductRepo(db)
+        return SQLAlchemyProductRepository(db)
     elif settings.ORM == "ponyorm":
         from app.layer_1_data_access.repositories.Product.product_pony import (
-            ProductRepository as PonyProductRepo,
+            PonyProductRepository,
         )
 
-        return PonyProductRepo()
+        return PonyProductRepository()
     else:
         raise ValueError("Invalid ORM in settings.")

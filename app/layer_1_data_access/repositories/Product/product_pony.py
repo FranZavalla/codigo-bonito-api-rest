@@ -3,30 +3,31 @@ from typing import List
 from pony.orm import commit, db_session, select
 
 from app.layer_0_db_definition.models_ponyorm import Product
-from app.layer_0_db_definition.schema import ProductCreate
+from app.layer_0_db_definition.schema import CreateProductData, ProductData
 
 from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
 )
 
 
-class ProductRepository(AbstractProductRepository):
+class PonyProductRepository(AbstractProductRepository):
     @db_session
-    def get_all(self) -> List[Product]:
-        return [p.to_dict() for p in select(p for p in Product)]
+    def get_all(self) -> List[ProductData]:
+        products = select(p for p in Product)
+        return [ProductData.model_validate(p.to_dict()) for p in products]
 
     @db_session
-    def get_by_id(self, product_id: int) -> Product:
+    def get_by_id(self, product_id: int) -> ProductData:
         product = Product.get(id=product_id)
         if not product:
             raise ValueError("Product does not exist")
-        return product.to_dict()
+        return ProductData.model_validate(product.to_dict())
 
     @db_session
-    def create(self, product: ProductCreate) -> Product:
+    def create(self, product: CreateProductData) -> ProductData:
         product_data = product.model_dump()
         new_product = Product(**product_data)
-        return new_product
+        return ProductData.model_validate(new_product.to_dict())
 
     @db_session
     def update_with_factor(self, factor: float) -> None:
