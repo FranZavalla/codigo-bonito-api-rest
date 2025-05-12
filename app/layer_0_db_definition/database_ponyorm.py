@@ -1,5 +1,3 @@
-from pony.orm import db_session
-
 from app.settings import settings
 
 from app.layer_0_db_definition.models_ponyorm import db
