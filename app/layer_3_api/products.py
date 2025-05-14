@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 
 
-from app.layer_0_db_definition.schema import CreateProductData
 from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
+    CreateProductData,
 )
 from app.layer_3_api.utils import get_product_repository
 

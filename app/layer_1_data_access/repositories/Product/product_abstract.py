@@ -1,7 +1,20 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from app.layer_0_db_definition.schema import CreateProductData, ProductData
+from pydantic import BaseModel
+
+
+class ProductData(BaseModel):
+    id: int
+    name: str
+    price: float
+
+    model_config = {"from_attributes": True}
+
+
+class CreateProductData(BaseModel):
+    name: str
+    price: float
 
 
 class AbstractProductRepository(ABC):

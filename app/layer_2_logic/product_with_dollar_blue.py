@@ -1,10 +1,10 @@
 from typing import List
 
-from app.layer_0_db_definition.schema import ProductData
 
 from app.layer_1_data_access.connectors.dollar_connector import DollarConnector
 from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
+    ProductData,
 )
 
 
