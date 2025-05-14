@@ -1,19 +1,14 @@
 from pydantic import BaseModel
 
 
-class ProductRequestData(BaseModel):
-    name: str
-    price: float
-
-
-class ProductResponse(BaseModel):
+class ProductData(BaseModel):
     id: int
     name: str
     price: float
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 
-class ProductResponseWithUSDPrice(ProductResponse):
-    usd_price: float
+class CreateProductData(BaseModel):
+    name: str
+    price: float

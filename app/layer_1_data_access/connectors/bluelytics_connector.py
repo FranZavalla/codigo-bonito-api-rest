@@ -4,6 +4,7 @@ import requests
 from pydantic import BaseModel
 
 from app.layer_1_data_access.connectors.dollar_connector import DollarConnector
+from app.settings import BLUELYTICS_API_URL
 
 
 class ExchangeRate(BaseModel):
@@ -21,10 +22,11 @@ class BluelyticsResponse(BaseModel):
 
 
 class BluelyticsConnector(DollarConnector):
-    api = "https://api.bluelytics.com.ar/v2/latest"
+    def __init__(self, endpoint=BLUELYTICS_API_URL):
+        self.endpoint = endpoint
 
     def get_price(self) -> float:
-        price_response = requests.get(self.api)
+        price_response = requests.get(self.endpoint)
         price_response.raise_for_status()
 
         json_data = price_response.json()

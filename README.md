@@ -40,6 +40,7 @@ Create a `.env` file in the `app` folder with the following content:
 DATABASE_PATH=path_to_your_database.sqlite
 ORM=sqlalchemy
 # ORM=ponyorm
+BLUELYTICS_API_URL=https://api.bluelytics.com.ar/v2/latest
 ```
 
 Then run the following command at the root of the project to start the app:

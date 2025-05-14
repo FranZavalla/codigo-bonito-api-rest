@@ -1,26 +1,31 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 
-from app.layer_0_db_definition.database_sqlalchemy import get_database
-from app.layer_0_db_definition.schema import ProductCreate
-from app.layer_1_data_access.repositories.Product.utils import get_product_repository
+
+from app.layer_0_db_definition.schema import CreateProductData
+from app.layer_1_data_access.repositories.Product.product_abstract import (
+    AbstractProductRepository,
+)
+from app.layer_3_api.utils import get_product_repository
 
 router = APIRouter()
 
 
 @router.get("")
-def get_products(db: Session = Depends(get_database)):
+def get_products(
+    product_repository: AbstractProductRepository = Depends(get_product_repository),
+):
     try:
-        product_repository = get_product_repository(db)
         return product_repository.get_all()
     except Exception as e:
         return {"error": str(e)}
 
 
 @router.post("")
-def create_product(product: ProductCreate, db: Session = Depends(get_database)):
+def create_product(
+    product: CreateProductData,
+    product_repository: AbstractProductRepository = Depends(get_product_repository),
+):
     try:
-        product_repository = get_product_repository(db)
         product_repository.create(product)
 
         return {"message": "Product created"}
@@ -29,18 +34,22 @@ def create_product(product: ProductCreate, db: Session = Depends(get_database)):
 
 
 @router.get("/{product_id}")
-def get_product(product_id: int, db: Session = Depends(get_database)):
+def get_product(
+    product_id: int,
+    product_repository: AbstractProductRepository = Depends(get_product_repository),
+):
     try:
-        product_repository = get_product_repository(db)
         return product_repository.get_by_id(product_id)
     except Exception as e:
         return {"error": str(e)}
 
 
 @router.put("")
-def update_products_price(factor: float, db: Session = Depends(get_database)):
+def update_products_price(
+    factor: float,
+    product_repository: AbstractProductRepository = Depends(get_product_repository),
+):
     try:
-        product_repository = get_product_repository(db)
         product_repository.update_with_factor(factor)
 
         return {"message": "Prices updated"}

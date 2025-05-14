@@ -1,22 +1,27 @@
 from typing import List
 
-from app.layer_0_db_definition.schema import ProductResponseWithUSDPrice
-from app.layer_1_data_access.connectors.bluelytics_connector import BluelyticsConnector
+from app.layer_0_db_definition.schema import ProductData
+
+from app.layer_1_data_access.connectors.dollar_connector import DollarConnector
 from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
 )
+
+
+class ProductDataWithUSDPrice(ProductData):
+    usd_price: float
 
 
 class ProductWithDollarBluePrices:
     def __init__(
         self,
         product_repository: AbstractProductRepository,
-        dollar_blue_connector: BluelyticsConnector,
+        dollar_blue_connector: DollarConnector,
     ):
         self.product_repository = product_repository
         self.dollar_blue_connector = dollar_blue_connector
 
-    def get_product(self, product_id: int) -> ProductResponseWithUSDPrice:
+    def get_product(self, product_id: int) -> ProductDataWithUSDPrice:
         """
         Retrieves a product by its ID and calculates its price in USD using the dollar blue exchange rate.
 
@@ -24,7 +29,7 @@ class ProductWithDollarBluePrices:
             product_id (int): The ID of the product to retrieve.
 
         Returns:
-            ProductResponseWithUSDPrice: An object containing the product details along with its price in USD.
+            ProductDataWithUSDPrice: An object containing the product details along with its price in USD.
 
         Raises:
             ValueError: If the product is not found or if there is an error fetching the dollar blue price.
@@ -35,19 +40,19 @@ class ProductWithDollarBluePrices:
         except ValueError as e:
             raise e
 
-        return ProductResponseWithUSDPrice(
+        return ProductDataWithUSDPrice(
             id=product.id,
             name=product.name,
             price=product.price,
             usd_price=round(product.price / dollar_blue_price, 2),
         )
 
-    def get_products(self) -> List[ProductResponseWithUSDPrice]:
+    def get_products(self) -> List[ProductDataWithUSDPrice]:
         """
         Retrieves a list of products with their prices converted to USD using the dollar blue exchange rate.
 
         Returns:
-            List[ProductResponseWithUSDPrice]: A list of products, each containing the product ID, name,
+            List[ProductDataWithUSDPrice]: A list of products, each containing the product ID, name,
             original price, and price converted to USD.
 
         Raises:
@@ -61,7 +66,7 @@ class ProductWithDollarBluePrices:
             raise e
 
         return [
-            ProductResponseWithUSDPrice(
+            ProductDataWithUSDPrice(
                 id=product.id,
                 name=product.name,
                 price=product.price,

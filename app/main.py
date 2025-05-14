@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 
 from app.layer_0_db_definition.database_ponyorm import init_pony
 from app.layer_0_db_definition.database_sqlalchemy import init_sqlalchemy
