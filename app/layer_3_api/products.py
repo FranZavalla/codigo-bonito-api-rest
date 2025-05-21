@@ -5,7 +5,7 @@ from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
     CreateProductData,
 )
-from app.layer_2_logic.utils import get_product_repository
+from app.layer_2_logic.repository_factories import get_product_repository
 
 router = APIRouter()
 
