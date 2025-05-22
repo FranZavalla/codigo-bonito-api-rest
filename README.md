@@ -75,3 +75,5 @@ poetry run pytest -k test_name
 ```bash
 poetry run pytest --cov=app
 ```
+
+We use `# pragma: no cover` to avoid coverage warnings for the abstract classes that are not covered by tests.

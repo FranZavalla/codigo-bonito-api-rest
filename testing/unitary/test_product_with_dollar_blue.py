@@ -13,12 +13,18 @@ from app.layer_2_logic.product_with_dollar_blue import (
 from testing.unitary.mocks.layer_one_mocks import (
     MockProductRepository,
     MockDollarConnector,
+    MockDollarConnectorWithException,
 )
 
 
 @pytest.fixture
 def init_classes() -> Tuple[AbstractProductRepository, DollarConnector]:
     return [MockProductRepository(), MockDollarConnector()]
+
+
+@pytest.fixture
+def init_classes_with_exception() -> Tuple[AbstractProductRepository, DollarConnector]:
+    return [MockProductRepository(), MockDollarConnectorWithException()]
 
 
 def test_product_with_dollar_blue(init_classes):
@@ -62,3 +68,12 @@ def test_products_with_dollar_blue_prices(init_classes):
         assert product.name == original_product.name
         assert product.price == original_product.price
         assert product.usd_price == round(original_product.price / dollar_price, 2)
+
+
+def test_dollar_connector_with_exception(init_classes_with_exception):
+    product_repository, dollar_connector = init_classes_with_exception
+    product_with_dollar_blue = ProductWithDollarBluePrices(
+        product_repository, dollar_connector
+    )
+    with pytest.raises(ValueError):
+        product_with_dollar_blue.get_products()

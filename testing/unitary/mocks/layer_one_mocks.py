@@ -41,3 +41,8 @@ class MockDollarConnector(DollarConnector):
 
     def get_price(self) -> float:
         return self.price
+
+
+class MockDollarConnectorWithException(DollarConnector):
+    def get_price(self) -> float:
+        raise ValueError("Error getting price")
