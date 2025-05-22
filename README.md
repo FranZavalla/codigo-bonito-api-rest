@@ -48,3 +48,30 @@ Then run the following command at the root of the project to start the app:
 ```bash
 poetry run uvicorn app.main:app --reload
 ```
+
+## Running the tests
+
+Make sure you are in the root of the project.
+To run the tests, use the following command:
+
+```bash
+poetry run pytest
+```
+
+To run all the tests in a specific file, use the following command:
+
+```bash
+poetry run pytest path/to/file.py
+```
+
+To run an specific test, use the following command:
+
+```bash
+poetry run pytest -k test_name
+```
+
+## Running the tests with coverage
+
+```bash
+poetry run pytest --cov=app
+```
