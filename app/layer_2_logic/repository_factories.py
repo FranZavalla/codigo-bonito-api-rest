@@ -10,8 +10,8 @@ from app.layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePric
 
 
 def get_product_repository() -> AbstractProductRepository:
-    db: Session = get_database()
-    return select_product_repository(db)
+    with get_database() as db:
+        return select_product_repository(db)
 
 
 def get_dollar_blue_repository() -> ProductWithDollarBluePrices:

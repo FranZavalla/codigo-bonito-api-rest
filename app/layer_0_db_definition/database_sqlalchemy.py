@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from contextlib import contextmanager
+
 
 from app.settings import DATABASE_URL
 
@@ -13,6 +15,7 @@ def init_sqlalchemy():
     Base.metadata.create_all(bind=engine)
 
 
+@contextmanager
 def get_database():
     db = SessionLocal()
 
