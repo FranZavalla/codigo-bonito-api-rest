@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-
+from contextlib import asynccontextmanager
 from app.layer_0_db_definition.database_ponyorm import init_pony
 from app.layer_0_db_definition.database_sqlalchemy import init_sqlalchemy
 from app.layer_3_api.products import router as products_router
@@ -17,7 +17,14 @@ def init_db():
         init_pony()
 
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
+    pass
+
+
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(products_router, prefix="/products", tags=["products"])
 app.include_router(
@@ -25,11 +32,6 @@ app.include_router(
     prefix="/products_with_usd_prices",
     tags=["products"],
 )
-
-
-@app.on_event("startup")
-def on_startup():
-    init_db()
 
 
 @app.get("/")
