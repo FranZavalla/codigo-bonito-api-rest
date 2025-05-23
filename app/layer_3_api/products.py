@@ -16,8 +16,10 @@ def get_products(
 ):
     try:
         products = product_repository.get_all()
-        return JSONResponse(status_code=200, content=products)
-    except Exception:
+        json_products = [product.model_dump() for product in products]
+        return JSONResponse(status_code=200, content=json_products)
+    except Exception as e:
+        print(e)
         return JSONResponse(status_code=500, content="Internal server error")
 
 
@@ -41,7 +43,8 @@ def get_product(
 ):
     try:
         product = product_repository.get_by_id(product_id)
-        return JSONResponse(status_code=200, content=product)
+        json_product = product.model_dump()
+        return JSONResponse(status_code=200, content=json_product)
     except ValueError:
         return JSONResponse(status_code=400, content="Product not found")
     except Exception:

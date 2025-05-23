@@ -14,7 +14,8 @@ def get_products_with_usd_price(
 ):
     try:
         products = dollar_blue_repository.get_products()
-        return JSONResponse(status_code=200, content=products)
+        json_products = [product.model_dump() for product in products]
+        return JSONResponse(status_code=200, content=json_products)
     except Exception:
         return JSONResponse(status_code=500, content="Internal server error")
 
@@ -27,7 +28,9 @@ def get_product_with_usd_price(
     ),
 ):
     try:
-        return dollar_blue_repository.get_product(product_id)
+        product = dollar_blue_repository.get_product(product_id)
+        json_product = product.model_dump()
+        return JSONResponse(status_code=200, content=json_product)
     except ValueError:
         return JSONResponse(status_code=400, content="Product not found")
     except Exception:
