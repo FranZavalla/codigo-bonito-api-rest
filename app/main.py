@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from app.layer_0_db_definition.database_ponyorm import init_pony
 from app.layer_0_db_definition.database_sqlalchemy import init_sqlalchemy
@@ -36,7 +37,7 @@ app.include_router(
 
 @app.get("/")
 def health_check():
-    return {"message": "Healthy"}
+    return JSONResponse(status_code=200, content={"message": "Healthy"})
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-
+from fastapi.responses import JSONResponse
 
 from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
@@ -15,9 +15,10 @@ def get_products(
     product_repository: AbstractProductRepository = Depends(get_product_repository),
 ):
     try:
-        return product_repository.get_all()
-    except Exception as e:
-        return {"error": str(e)}
+        products = product_repository.get_all()
+        return JSONResponse(status_code=200, content=products)
+    except Exception:
+        return JSONResponse(status_code=500, content="Internal server error")
 
 
 @router.post("")
@@ -28,9 +29,9 @@ def create_product(
     try:
         product_repository.create(product)
 
-        return {"message": "Product created"}
-    except Exception as e:
-        return {"error": str(e)}
+        return JSONResponse(status_code=201, content="Product created")
+    except Exception:
+        return JSONResponse(status_code=500, content="Internal server error")
 
 
 @router.get("/{product_id}")
@@ -39,9 +40,12 @@ def get_product(
     product_repository: AbstractProductRepository = Depends(get_product_repository),
 ):
     try:
-        return product_repository.get_by_id(product_id)
-    except Exception as e:
-        return {"error": str(e)}
+        product = product_repository.get_by_id(product_id)
+        return JSONResponse(status_code=200, content=product)
+    except ValueError:
+        return JSONResponse(status_code=400, content="Product not found")
+    except Exception:
+        return JSONResponse(status_code=500, content="Internal server error")
 
 
 @router.put("")
@@ -52,6 +56,6 @@ def update_products_price(
     try:
         product_repository.update_with_factor(factor)
 
-        return {"message": "Prices updated"}
-    except Exception as e:
-        return {"error": str(e)}
+        return JSONResponse(status_code=204, content="Prices updated")
+    except Exception:
+        return JSONResponse(status_code=500, content="Internal server error")

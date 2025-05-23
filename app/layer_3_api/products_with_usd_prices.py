@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-
+from fastapi.responses import JSONResponse
 from app.layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePrices
 from app.layer_2_logic.repository_factories import get_dollar_blue_repository
 
@@ -13,9 +13,10 @@ def get_products_with_usd_price(
     ),
 ):
     try:
-        return dollar_blue_repository.get_products()
-    except Exception as e:
-        return {"error": str(e)}
+        products = dollar_blue_repository.get_products()
+        return JSONResponse(status_code=200, content=products)
+    except Exception:
+        return JSONResponse(status_code=500, content="Internal server error")
 
 
 @router.get("/{product_id}")
@@ -27,5 +28,7 @@ def get_product_with_usd_price(
 ):
     try:
         return dollar_blue_repository.get_product(product_id)
-    except Exception as e:
-        return {"error": str(e)}
+    except ValueError:
+        return JSONResponse(status_code=400, content="Product not found")
+    except Exception:
+        return JSONResponse(status_code=500, content="Internal server error")
