@@ -2,15 +2,12 @@ import pytest
 from typing import Tuple
 from app.layer_1_data_access.repositories.Product.product_abstract import (
     AbstractProductRepository,
-    ProductData,
-    CreateProductData,
 )
 from app.layer_2_logic.product_with_dollar_blue import (
     ProductWithDollarBluePrices,
-    ProductDataWithUSDPrice,
     DollarConnector,
 )
-from testing.unitary.mocks.layer_one_mocks import (
+from testing.mocks.layer_one_mocks import (
     MockProductRepository,
     MockDollarConnector,
     MockDollarConnectorWithException,
@@ -52,6 +49,15 @@ def test_non_existing_product(init_classes):
         product_with_dollar_blue.get_product(4)
 
 
+def test_product_with_exception(init_classes_with_exception):
+    product_repository, dollar_connector = init_classes_with_exception
+    product_with_dollar_blue = ProductWithDollarBluePrices(
+        product_repository, dollar_connector
+    )
+    with pytest.raises(Exception):
+        product_with_dollar_blue.get_product(1)
+
+
 def test_products_with_dollar_blue_prices(init_classes):
     product_repository, dollar_connector = init_classes
     product_with_dollar_blue = ProductWithDollarBluePrices(
@@ -70,7 +76,7 @@ def test_products_with_dollar_blue_prices(init_classes):
         assert product.usd_price == round(original_product.price / dollar_price, 2)
 
 
-def test_dollar_connector_with_exception(init_classes_with_exception):
+def test_products_with_exception(init_classes_with_exception):
     product_repository, dollar_connector = init_classes_with_exception
     product_with_dollar_blue = ProductWithDollarBluePrices(
         product_repository, dollar_connector

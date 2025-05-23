@@ -55,25 +55,19 @@ Make sure you are in the root of the project.
 To run the tests, use the following command:
 
 ```bash
-poetry run pytest
-```
-
-To run all the tests in a specific file, use the following command:
-
-```bash
-poetry run pytest path/to/file.py
+make run_all_tests
 ```
 
 To run an specific test, use the following command:
 
 ```bash
-poetry run pytest -k test_name
+make run_specific_test test=test_name
 ```
 
 ## Running the tests with coverage
 
-```bash
-poetry run pytest --cov=app
-```
-
 We use `# pragma: no cover` to avoid coverage warnings for the abstract classes that are not covered by tests.
+
+```bash
+make run_tests_with_coverage
+```

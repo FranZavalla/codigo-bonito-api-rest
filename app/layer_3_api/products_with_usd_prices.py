@@ -32,6 +32,6 @@ def get_product_with_usd_price(
         json_product = product.model_dump()
         return JSONResponse(status_code=200, content=json_product)
     except ValueError:
-        return JSONResponse(status_code=400, content="Product not found")
+        return JSONResponse(status_code=404, content="Product not found")
     except Exception:
         return JSONResponse(status_code=500, content="Internal server error")

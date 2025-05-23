@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError
 from app.layer_1_data_access.connectors.bluelytics_connector import (
     BluelyticsConnector,
 )
-from testing.unitary.mocks.bluelytics_mocks import (
+from testing.mocks.bluelytics_mocks import (
     HappyMockResponse,
     BadModelMockResponse,
     BadParsingMockResponse,
