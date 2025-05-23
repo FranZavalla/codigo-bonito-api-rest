@@ -18,7 +18,6 @@ def init_db():
     path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), settings.DATABASE_PATH
     )
-    print(path)
     if os.path.exists(path):
         os.remove(path)
 
@@ -49,7 +48,6 @@ def test_health_check():
 
 def test_get_products_returns_200(init_db):
     response = client.get("/products")
-    print(response.json())
     assert response.status_code == 200
     assert isinstance(response.json(), list)
     assert len(response.json()) == 3
