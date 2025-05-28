@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
-from app.layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePrices
+
+from app.layer_2_logic.product_with_dollar_blue import \
+    ProductWithDollarBluePrices
 from app.layer_2_logic.repository_factories import get_dollar_blue_repository
 
 router = APIRouter()

@@ -1,12 +1,13 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from contextlib import asynccontextmanager
+
 from app.layer_0_db_definition.database_ponyorm import init_pony
 from app.layer_0_db_definition.database_sqlalchemy import init_sqlalchemy
 from app.layer_3_api.products import router as products_router
-from app.layer_3_api.products_with_usd_prices import (
-    router as products_with_usd_prices_router,
-)
+from app.layer_3_api.products_with_usd_prices import \
+    router as products_with_usd_prices_router
 from app.settings import settings
 
 

@@ -1,17 +1,15 @@
-import pytest
 from typing import Tuple
-from app.layer_1_data_access.repositories.Product.product_abstract import (
-    AbstractProductRepository,
-)
+
+import pytest
+
+from app.layer_1_data_access.repositories.Product.product_abstract import \
+    AbstractProductRepository
 from app.layer_2_logic.product_with_dollar_blue import (
-    ProductWithDollarBluePrices,
-    DollarConnector,
-)
+    DollarConnector, ProductWithDollarBluePrices)
 from testing.mocks.layer_one_mocks import (
-    get_mock_product_respository_happy_response,
-    get_mock_dollar_connector_with_happy_response,
     get_mock_dollar_connector_with_exception,
-)
+    get_mock_dollar_connector_with_happy_response,
+    get_mock_product_respository_happy_response)
 
 
 @pytest.fixture

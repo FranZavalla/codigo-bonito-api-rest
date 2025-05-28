@@ -1,14 +1,13 @@
-import pytest
 import os
 
+import pytest
 from fastapi.testclient import TestClient
-from app.main import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.settings import settings, DATABASE_URL
 from app.layer_0_db_definition.models_sqlalchemy import Base, Product
-
+from app.main import app
+from app.settings import DATABASE_URL, settings
 
 client = TestClient(app)
 

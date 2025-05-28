@@ -1,11 +1,10 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from app.layer_0_db_definition.models_sqlalchemy import Base, Product
 from app.layer_1_data_access.repositories.Product.product_sqlachemy import (
-    SQLAlchemyProductRepository,
-    CreateProductData,
-)
+    CreateProductData, SQLAlchemyProductRepository)
 
 
 @pytest.fixture

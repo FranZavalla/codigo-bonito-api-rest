@@ -16,15 +16,13 @@ def select_product_repository(db: Optional[Session] = None):
         Union[SQLARepo, PonyRepo]: An instance of the appropriate product repository.
     """
     if settings.ORM == "sqlalchemy":
-        from app.layer_1_data_access.repositories.Product.product_sqlachemy import (
-            SQLAlchemyProductRepository,
-        )
+        from app.layer_1_data_access.repositories.Product.product_sqlachemy import \
+            SQLAlchemyProductRepository
 
         return SQLAlchemyProductRepository(db)
     elif settings.ORM == "ponyorm":
-        from app.layer_1_data_access.repositories.Product.product_pony import (
-            PonyProductRepository,
-        )
+        from app.layer_1_data_access.repositories.Product.product_pony import \
+            PonyProductRepository
 
         return PonyProductRepository()
     else:

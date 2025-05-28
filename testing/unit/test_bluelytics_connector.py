@@ -1,16 +1,14 @@
-import pytest
-from requests.exceptions import HTTPError
 from unittest.mock import patch
 
-from testing.mocks.bluelytics_mocks import (
-    get_happy_mock_response,
-    get_bad_status_mock_response,
-    get_bad_parsing_mock_response,
-    get_bad_model_mock_response,
-)
-from app.layer_1_data_access.connectors.bluelytics_connector import (
-    BluelyticsConnector,
-)
+import pytest
+from requests.exceptions import HTTPError
+
+from app.layer_1_data_access.connectors.bluelytics_connector import \
+    BluelyticsConnector
+from testing.mocks.bluelytics_mocks import (get_bad_model_mock_response,
+                                            get_bad_parsing_mock_response,
+                                            get_bad_status_mock_response,
+                                            get_happy_mock_response)
 
 
 def test_get_prices_return_avg_value_on_success():

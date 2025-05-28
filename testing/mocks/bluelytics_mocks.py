@@ -1,6 +1,7 @@
 from datetime import datetime
-from requests.exceptions import HTTPError
 from unittest.mock import MagicMock
+
+from requests.exceptions import HTTPError
 
 
 def get_happy_mock_response(value_avg=1):

@@ -1,10 +1,9 @@
 import pytest
-from pony.orm import db_session, commit
-from app.layer_0_db_definition.models_ponyorm import db, Product
+from pony.orm import commit, db_session
+
+from app.layer_0_db_definition.models_ponyorm import Product, db
 from app.layer_1_data_access.repositories.Product.product_pony import (
-    PonyProductRepository,
-    CreateProductData,
-)
+    CreateProductData, PonyProductRepository)
 
 
 @pytest.fixture()
