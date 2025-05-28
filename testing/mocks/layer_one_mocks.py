@@ -1,48 +1,38 @@
-from typing import List
+from unittest.mock import MagicMock
+
 from app.layer_1_data_access.repositories.Product.product_abstract import (
-    AbstractProductRepository,
     ProductData,
-    CreateProductData,
-)
-from app.layer_2_logic.product_with_dollar_blue import (
-    DollarConnector,
 )
 
 
-class MockProductRepository(AbstractProductRepository):
-    def __init__(self):
-        self.products = [
-            ProductData(id=1, name="Pretty shirt", price=7500.0),
-            ProductData(id=2, name="Cool mug", price=4000.0),
-            ProductData(id=3, name="TV 4K", price=1500000.0),
-        ]
+def get_mock_product_respository_happy_response():
+    products = [
+        ProductData(id=1, name="Pretty shirt", price=7500.0),
+        ProductData(id=2, name="Cool mug", price=4000.0),
+        ProductData(id=3, name="TV 4K", price=1500000.0),
+    ]
 
-    def get_all(self) -> List[ProductData]:
-        return self.products
+    mock_response = MagicMock()
+    mock_response.get_all.return_value = products
 
-    def get_by_id(self, product_id: int) -> ProductData:
-        for product in self.products:
+    def get_by_id(product_id: int) -> ProductData:
+        for product in products:
             if product.id == product_id:
                 return product
-        raise ValueError("Product not found")
+        raise ValueError(f"Product with id {product_id} not found")
 
-    def create(self, product: CreateProductData) -> ProductData:
-        self.products.append(product)
-        return product
+    mock_response.get_by_id = get_by_id
 
-    def update_with_factor(self, factor: float) -> None:
-        for product in self.products:
-            product.price *= factor
+    return mock_response
 
 
-class MockDollarConnector(DollarConnector):
-    def __init__(self):
-        self.price = 1
-
-    def get_price(self) -> float:
-        return self.price
+def get_mock_dollar_connector_with_happy_response():
+    mock_response = MagicMock()
+    mock_response.get_price.return_value = 1
+    return mock_response
 
 
-class MockDollarConnectorWithException(DollarConnector):
-    def get_price(self) -> float:
-        raise ValueError("Error getting price")
+def get_mock_dollar_connector_with_exception():
+    mock_response = MagicMock()
+    mock_response.get_price.side_effect = ValueError("Error getting price")
+    return mock_response

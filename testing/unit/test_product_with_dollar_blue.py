@@ -8,20 +8,26 @@ from app.layer_2_logic.product_with_dollar_blue import (
     DollarConnector,
 )
 from testing.mocks.layer_one_mocks import (
-    MockProductRepository,
-    MockDollarConnector,
-    MockDollarConnectorWithException,
+    get_mock_product_respository_happy_response,
+    get_mock_dollar_connector_with_happy_response,
+    get_mock_dollar_connector_with_exception,
 )
 
 
 @pytest.fixture
 def init_classes() -> Tuple[AbstractProductRepository, DollarConnector]:
-    return [MockProductRepository(), MockDollarConnector()]
+    return [
+        get_mock_product_respository_happy_response(),
+        get_mock_dollar_connector_with_happy_response(),
+    ]
 
 
 @pytest.fixture
 def init_classes_with_exception() -> Tuple[AbstractProductRepository, DollarConnector]:
-    return [MockProductRepository(), MockDollarConnectorWithException()]
+    return [
+        get_mock_product_respository_happy_response(),
+        get_mock_dollar_connector_with_exception(),
+    ]
 
 
 def test_product_with_dollar_blue(init_classes):
