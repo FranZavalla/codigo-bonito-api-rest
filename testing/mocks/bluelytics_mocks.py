@@ -1,48 +1,37 @@
 from datetime import datetime
 from requests.exceptions import HTTPError
-
-from app.layer_1_data_access.connectors.bluelytics_connector import (
-    BluelyticsResponse,
-    ExchangeRate,
-)
+from unittest.mock import MagicMock
 
 
-class HappyMockResponse:
-    def __init__(self, value_avg=1):
-        self.value_avg = value_avg
+def get_happy_mock_response(value_avg=1):
+    mock_response = MagicMock()
+    mock_response.raise_for_status.return_value = None
+    mock_response.json.return_value = {
+        "oficial": {"value_avg": 1, "value_sell": 1, "value_buy": 1},
+        "blue": {"value_avg": value_avg, "value_sell": 1, "value_buy": 1},
+        "oficial_euro": {"value_avg": 1, "value_sell": 1, "value_buy": 1},
+        "blue_euro": {"value_avg": 1, "value_sell": 1, "value_buy": 1},
+        "last_update": datetime.now(),
+    }
 
-    def raise_for_status(self):
-        pass
-
-    def json(self):
-        exchange_rate = ExchangeRate(
-            value_avg=self.value_avg, value_sell=1, value_buy=1
-        )
-        return BluelyticsResponse(
-            oficial=exchange_rate,
-            blue=exchange_rate,
-            oficial_euro=exchange_rate,
-            blue_euro=exchange_rate,
-            last_update=datetime.now(),
-        )
+    return mock_response
 
 
-class BadStatusMockResponse:
-    def raise_for_status(self):
-        raise HTTPError("Bad status", response=self)
+def get_bad_status_mock_response():
+    mock_response = MagicMock()
+    mock_response.raise_for_status.side_effect = HTTPError(
+        "Bad status", response=mock_response
+    )
+    return mock_response
 
 
-class BadParsingMockResponse:
-    def raise_for_status(self):
-        pass
-
-    def json(self):
-        raise ValueError("Error parsing Bluelytics response")
+def get_bad_parsing_mock_response():
+    mock_response = MagicMock()
+    mock_response.json.side_effect = ValueError("Error parsing Bluelytics response")
+    return mock_response
 
 
-class BadModelMockResponse:
-    def raise_for_status(self):
-        pass
-
-    def json(self):
-        return {"bad_model": "bad_model"}
+def get_bad_model_mock_response():
+    mock_response = MagicMock()
+    mock_response.json.return_value = {"bad_model": "bad_model"}
+    return mock_response
