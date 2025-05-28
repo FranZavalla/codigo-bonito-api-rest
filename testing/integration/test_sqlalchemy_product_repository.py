@@ -111,9 +111,10 @@ def test_update_with_factor_one_does_not_change_prices(session_with_products):
 # The create method doesn't throw an error when we enter a negative value.
 # This is a bug that the developer would notice in the code.
 
-# def test_create_product_with_negative_price_raises_error(session):
-#     repo = SQLAlchemyProductRepository(session)
 
-#     data = CreateProductData(name="Invalid Product", price=-100.0)
-#     with pytest.raises(ValueError):
-#         repo.create(data)
+def _test_create_product_with_negative_price_raises_error(session):
+    repo = SQLAlchemyProductRepository(session)
+
+    data = CreateProductData(name="Invalid Product", price=-100.0)
+    with pytest.raises(ValueError):
+        repo.create(data)
