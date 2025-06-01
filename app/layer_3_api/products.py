@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
 
-from app.layer_1_data_access.repositories.Product.product_abstract import (
+from app.layer_1_data_access.repositories.product_abstract import (
     AbstractProductRepository,
     CreateProductData,
 )

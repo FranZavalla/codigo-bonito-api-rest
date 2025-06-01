@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.layer_0_db_definition.models_sqlalchemy import Product
 
-from app.layer_1_data_access.repositories.Product.product_abstract import (
+from app.layer_1_data_access.repositories.product_abstract import (
     AbstractProductRepository,
     ProductData,
     CreateProductData,
