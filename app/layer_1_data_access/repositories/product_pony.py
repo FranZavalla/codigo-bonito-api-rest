@@ -3,8 +3,12 @@ from typing import List
 from pony.orm import commit, db_session, select
 
 from app.layer_0_db_definition.models_ponyorm import Product
-from app.layer_1_data_access.repositories.Product.product_abstract import (
-    AbstractProductRepository, CreateProductData, ProductData)
+
+from app.layer_1_data_access.repositories.product_abstract import (
+    AbstractProductRepository,
+    ProductData,
+    CreateProductData,
+)
 
 
 class PonyProductRepository(AbstractProductRepository):

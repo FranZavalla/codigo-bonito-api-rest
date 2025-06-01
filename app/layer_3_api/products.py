@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from app.layer_1_data_access.repositories.Product.product_abstract import (
-    AbstractProductRepository, CreateProductData)
+from app.layer_1_data_access.repositories.product_abstract import (
+    AbstractProductRepository,
+    CreateProductData,
+)
 from app.layer_2_logic.repository_factories import get_product_repository
 
 router = APIRouter()
