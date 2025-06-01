@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock
 
-from app.layer_1_data_access.repositories.Product.product_abstract import \
-    ProductData
+from app.layer_1_data_access.repositories.product_abstract import ProductData
 
 
 def get_mock_product_respository_happy_response():
