@@ -4,9 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.layer_0_db_definition.models_sqlalchemy import Base, Product
 from app.layer_1_data_access.repositories.product_sqlachemy import (
-    CreateProductData,
-    SQLAlchemyProductRepository,
-)
+    CreateProductData, SQLAlchemyProductRepository)
 
 
 @pytest.fixture

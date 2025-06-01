@@ -2,9 +2,7 @@ from typing import List
 
 from app.layer_1_data_access.connectors.dollar_connector import DollarConnector
 from app.layer_1_data_access.repositories.product_abstract import (
-    AbstractProductRepository,
-    ProductData,
-)
+    AbstractProductRepository, ProductData)
 
 
 class ProductDataWithUSDPrice(ProductData):
