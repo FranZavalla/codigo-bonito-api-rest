@@ -6,8 +6,9 @@ from fastapi.responses import JSONResponse
 from app.layer_0_db_definition.database_ponyorm import init_pony
 from app.layer_0_db_definition.database_sqlalchemy import init_sqlalchemy
 from app.layer_3_api.products import router as products_router
-from app.layer_3_api.products_with_usd_prices import \
-    router as products_with_usd_prices_router
+from app.layer_3_api.products_with_usd_prices import (
+    router as products_with_usd_prices_router,
+)
 from app.settings import settings
 
 
@@ -38,7 +39,7 @@ app.include_router(
 
 @app.get("/")
 def health_check():
-    return JSONResponse(status_code=200, content={"message": "Healthy"})
+    return JSONResponse(status_code=200, content={"detail": "Healthy"})
 
 
 if __name__ == "__main__":
