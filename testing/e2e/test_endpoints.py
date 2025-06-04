@@ -1,7 +1,7 @@
 import os
-import requests
 
 import pytest
+import requests
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
