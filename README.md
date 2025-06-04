@@ -48,3 +48,26 @@ Then run the following command at the root of the project to start the app:
 ```bash
 poetry run uvicorn app.main:app --reload
 ```
+
+## Running the tests
+
+Make sure you are in the root of the project.
+To run the tests, use the following command:
+
+```bash
+make run_all_tests
+```
+
+To run an specific test, use the following command:
+
+```bash
+make run_specific_test test=test_name
+```
+
+## Running the tests with coverage
+
+We use `# pragma: no cover` to avoid coverage warnings for the abstract classes that are not covered by tests.
+
+```bash
+make run_tests_with_coverage
+```

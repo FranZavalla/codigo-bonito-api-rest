@@ -1,6 +1,5 @@
-from app.settings import settings
-
 from app.layer_0_db_definition.models_ponyorm import db
+from app.settings import settings
 
 
 def init_pony():

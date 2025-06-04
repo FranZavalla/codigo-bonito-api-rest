@@ -1,11 +1,8 @@
 from typing import List
 
-
 from app.layer_1_data_access.connectors.dollar_connector import DollarConnector
 from app.layer_1_data_access.repositories.product_abstract import (
-    AbstractProductRepository,
-    ProductData,
-)
+    AbstractProductRepository, ProductData)
 
 
 class ProductDataWithUSDPrice(ProductData):
@@ -36,9 +33,13 @@ class ProductWithDollarBluePrices:
         """
         try:
             product = self.product_repository.get_by_id(product_id)
-            dollar_blue_price = self.dollar_blue_connector.get_price()
         except ValueError as e:
             raise e
+
+        try:
+            dollar_blue_price = self.dollar_blue_connector.get_price()
+        except ValueError as e:
+            raise Exception("Error getting dollar blue price")
 
         return ProductDataWithUSDPrice(
             id=product.id,

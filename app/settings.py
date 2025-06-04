@@ -3,12 +3,13 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    ORM: str = Field(default="sqlalchemy", enumerate=["sqlalchemy", "ponyorm"])
+    ORM: str = Field(
+        default="sqlalchemy", json_schema_extra={"enum": ["sqlalchemy", "ponyorm"]}
+    )
     DATABASE_PATH: str = Field(min_length=1)
     BLUELYTICS_API_URL: str = Field(min_length=1)
 
-    class Config:
-        env_file = "./app/.env"
+    model_config = {"env_file": "./app/.env"}
 
 
 settings = Settings()

@@ -1,12 +1,14 @@
 from typing import Optional
+
 from sqlalchemy.orm import Session
 
 from app.layer_0_db_definition.database_sqlalchemy import get_database
-from app.layer_1_data_access.connectors.bluelytics_connector import BluelyticsConnector
-from app.layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePrices
-from app.layer_1_data_access.repositories.product_abstract import (
-    AbstractProductRepository,
-)
+from app.layer_1_data_access.connectors.bluelytics_connector import \
+    BluelyticsConnector
+from app.layer_1_data_access.repositories.product_abstract import \
+    AbstractProductRepository
+from app.layer_2_logic.product_with_dollar_blue import \
+    ProductWithDollarBluePrices
 from app.settings import settings
 
 
@@ -23,15 +25,13 @@ def select_product_repository(
         Union[SQLARepo, PonyRepo]: An instance of the appropriate product repository.
     """
     if settings.ORM == "sqlalchemy":
-        from app.layer_1_data_access.repositories.product_sqlachemy import (
-            SQLAlchemyProductRepository,
-        )
+        from app.layer_1_data_access.repositories.product_sqlachemy import \
+            SQLAlchemyProductRepository
 
         return SQLAlchemyProductRepository(db)
     elif settings.ORM == "ponyorm":
-        from app.layer_1_data_access.repositories.product_pony import (
-            PonyProductRepository,
-        )
+        from app.layer_1_data_access.repositories.product_pony import \
+            PonyProductRepository
 
         return PonyProductRepository()
     else:
@@ -39,8 +39,8 @@ def select_product_repository(
 
 
 def get_product_repository() -> AbstractProductRepository:
-    db: Session = get_database()
-    return select_product_repository(db)
+    with get_database() as db:
+        return select_product_repository(db)
 
 
 def get_dollar_blue_repository() -> ProductWithDollarBluePrices:

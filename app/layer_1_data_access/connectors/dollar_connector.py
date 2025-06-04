@@ -10,4 +10,4 @@ class DollarConnector(ABC):
         Returns:
           float: The current price of the dollar.
         """
-        pass
+        pass  # pragma: no cover

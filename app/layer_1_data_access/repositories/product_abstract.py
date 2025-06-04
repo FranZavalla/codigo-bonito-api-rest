@@ -26,7 +26,7 @@ class AbstractProductRepository(ABC):
         Returns:
           List[Product]: A list of all Product objects stored in the database.
         """
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def get_by_id(self, product_id: int) -> ProductData:
@@ -42,7 +42,7 @@ class AbstractProductRepository(ABC):
         Raises:
           ValueError: If no product with the given ID exists in the database.
         """
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def create(self, product: CreateProductData) -> ProductData:
@@ -55,7 +55,7 @@ class AbstractProductRepository(ABC):
         Returns:
           Product: The created product instance.
         """
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def update_with_factor(self, factor: float) -> None:
@@ -65,4 +65,4 @@ class AbstractProductRepository(ABC):
         Parameters:
           factor (float): The factor by which to multiply the price of each product.
         """
-        pass
+        pass  # pragma: no cover
