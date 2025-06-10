@@ -2,13 +2,14 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
 from app.layer_1_data_access.repositories.product_abstract import (
-    AbstractProductRepository, CreateProductData)
+    AbstractProductRepository,
+    CreateProductData,
+)
 from app.layer_2_logic.repository_factories import get_product_repository
+from app.main import app
 
-router = APIRouter()
 
-
-@router.get("")
+@app.get("/products")
 def get_products(
     product_repository: AbstractProductRepository = Depends(get_product_repository),
 ):
@@ -22,7 +23,7 @@ def get_products(
         )
 
 
-@router.post("")
+@app.post("/products")
 def create_product(
     product: CreateProductData,
     product_repository: AbstractProductRepository = Depends(get_product_repository),
@@ -37,7 +38,7 @@ def create_product(
         )
 
 
-@router.get("/{product_id}")
+@app.get("/products/{product_id}")
 def get_product(
     product_id: int,
     product_repository: AbstractProductRepository = Depends(get_product_repository),
@@ -54,7 +55,7 @@ def get_product(
         )
 
 
-@router.put("")
+@app.put("/products")
 def update_products_price(
     factor: float,
     product_repository: AbstractProductRepository = Depends(get_product_repository),

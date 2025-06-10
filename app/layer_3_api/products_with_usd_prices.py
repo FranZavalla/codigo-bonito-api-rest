@@ -1,14 +1,12 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from app.layer_2_logic.product_with_dollar_blue import \
-    ProductWithDollarBluePrices
+from app.layer_2_logic.product_with_dollar_blue import ProductWithDollarBluePrices
 from app.layer_2_logic.repository_factories import get_dollar_blue_repository
+from app.main import app
 
-router = APIRouter()
 
-
-@router.get("")
+@app.get("/products_with_usd_prices")
 def get_products_with_usd_price(
     dollar_blue_repository: ProductWithDollarBluePrices = Depends(
         get_dollar_blue_repository
@@ -24,7 +22,7 @@ def get_products_with_usd_price(
         )
 
 
-@router.get("/{product_id}")
+@app.get("/products_with_usd_prices/{product_id}")
 def get_product_with_usd_price(
     product_id: int,
     dollar_blue_repository: ProductWithDollarBluePrices = Depends(
