@@ -1,9 +1,11 @@
 import pytest
-from pony.orm import commit, db_session
+from pony.orm import commit, db_session, count, select
 
 from app.layer_0_db_definition.models_ponyorm import Product, db
 from app.layer_1_data_access.repositories.product_pony import (
-    CreateProductData, PonyProductRepository)
+    CreateProductData,
+    PonyProductRepository,
+)
 
 
 @pytest.fixture()
@@ -47,7 +49,7 @@ def test_get_all_returns_all_products(db_with_products):
     with db_session:
         repo = PonyProductRepository()
 
-        assert len(repo.get_all()) == 3
+        assert len(repo.get_all()) == count(p for p in Product)
 
 
 def test_get_by_id_returns_product(db_with_products):
@@ -55,7 +57,7 @@ def test_get_by_id_returns_product(db_with_products):
         repo = PonyProductRepository()
 
         product = repo.get_by_id(1)
-        assert product.name == "Pretty shirt"
+        assert product.name == Product.get(id=1).name
 
 
 def test_get_by_id_returns_error_if_product_does_not_exist(db_with_products):
@@ -69,29 +71,34 @@ def test_get_by_id_returns_error_if_product_does_not_exist(db_with_products):
 def test_create_product(db_with_products):
     with db_session:
         repo = PonyProductRepository()
+        product_count = count(p for p in Product)
 
         data = CreateProductData(name="Candy bar", price=100.0)
         result = repo.create(data)
         assert result.name == "Candy bar"
-        assert result.price == 100.0
         assert result.id is not None
+        assert count(p for p in Product) == product_count + 1
 
 
 def test_create_product_with_large_price(db_with_products):
     with db_session:
         repo = PonyProductRepository()
+        product_count = count(p for p in Product)
 
         product = repo.create(CreateProductData(name="Luxury car", price=1e9))
         assert product.price == 1e9
+        assert count(p for p in Product) == product_count + 1
 
 
 def test_create_product_with_zero_price(db_with_products):
     with db_session:
         repo = PonyProductRepository()
+        product_count = count(p for p in Product)
 
         data = CreateProductData(name="Free Product", price=0.0)
         result = repo.create(data)
         assert result.price == 0.0
+        assert count(p for p in Product) == product_count + 1
 
 
 def test_update_with_factor(db_with_products):

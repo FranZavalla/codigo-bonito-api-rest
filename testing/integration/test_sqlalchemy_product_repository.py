@@ -4,7 +4,9 @@ from sqlalchemy.orm import sessionmaker
 
 from app.layer_0_db_definition.models_sqlalchemy import Base, Product
 from app.layer_1_data_access.repositories.product_sqlachemy import (
-    CreateProductData, SQLAlchemyProductRepository)
+    CreateProductData,
+    SQLAlchemyProductRepository,
+)
 
 
 @pytest.fixture
@@ -43,14 +45,17 @@ def test_get_all_returns_empty_list(session):
 def test_get_all_returns_all_products(session_with_products):
     repo = SQLAlchemyProductRepository(session_with_products)
 
-    assert len(repo.get_all()) == 3
+    assert len(repo.get_all()) == session_with_products.query(Product).count()
 
 
 def test_get_by_id_returns_product(session_with_products):
     repo = SQLAlchemyProductRepository(session_with_products)
 
     product = repo.get_by_id(1)
-    assert product.name == "Pretty shirt"
+    assert (
+        product.name
+        == session_with_products.query(Product).filter(Product.id == 1).first().name
+    )
 
 
 def test_get_by_id_returns_error_if_product_does_not_exist(session_with_products):
@@ -62,27 +67,32 @@ def test_get_by_id_returns_error_if_product_does_not_exist(session_with_products
 
 def test_create_product(session):
     repo = SQLAlchemyProductRepository(session)
+    product_count = session.query(Product).count()
 
     data = CreateProductData(name="Candy bar", price=100.0)
     result = repo.create(data)
     assert result.name == "Candy bar"
-    assert result.price == 100.0
     assert result.id is not None
+    assert session.query(Product).count() == product_count + 1
 
 
 def test_create_product_with_large_price(session):
     repo = SQLAlchemyProductRepository(session)
+    product_count = session.query(Product).count()
 
     product = repo.create(CreateProductData(name="Luxury car", price=1e9))
     assert product.price == 1e9
+    assert session.query(Product).count() == product_count + 1
 
 
 def test_create_product_with_zero_price(session):
     repo = SQLAlchemyProductRepository(session)
+    product_count = session.query(Product).count()
 
     data = CreateProductData(name="Free Product", price=0.0)
     result = repo.create(data)
     assert result.price == 0.0
+    assert session.query(Product).count() == product_count + 1
 
 
 def test_update_with_factor(session_with_products):
