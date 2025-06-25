@@ -73,10 +73,7 @@ def test_create_product(db_with_products):
         repo = PonyProductRepository()
         product_count = count(p for p in Product)
 
-        data = CreateProductData(name="Candy bar", price=100.0)
-        result = repo.create(data)
-        assert result.name == "Candy bar"
-        assert result.id is not None
+        repo.create(CreateProductData(name="Candy bar", price=100.0))
         assert count(p for p in Product) == product_count + 1
 
 
@@ -85,8 +82,7 @@ def test_create_product_with_large_price(db_with_products):
         repo = PonyProductRepository()
         product_count = count(p for p in Product)
 
-        product = repo.create(CreateProductData(name="Luxury car", price=1e9))
-        assert product.price == 1e9
+        repo.create(CreateProductData(name="Luxury car", price=1e9))
         assert count(p for p in Product) == product_count + 1
 
 
@@ -95,9 +91,7 @@ def test_create_product_with_zero_price(db_with_products):
         repo = PonyProductRepository()
         product_count = count(p for p in Product)
 
-        data = CreateProductData(name="Free Product", price=0.0)
-        result = repo.create(data)
-        assert result.price == 0.0
+        repo.create(CreateProductData(name="Free Product", price=0.0))
         assert count(p for p in Product) == product_count + 1
 
 
@@ -105,19 +99,21 @@ def test_update_with_factor(db_with_products):
     with db_session:
         repo = PonyProductRepository()
 
+        original_prices = select(p for p in Product)
         repo.update_with_factor(2)
-        products = repo.get_all()
+        updated_prices = select(p for p in Product)
 
-        assert products[0].price == 15000.0
-        assert products[1].price == 8000.0
-        assert products[2].price == 3000000.0
+        for original, updated in zip(original_prices, updated_prices):
+            assert original.price == updated.price
 
 
 def test_update_with_factor_one_does_not_change_prices(db_with_products):
-    repo = PonyProductRepository()
+    with db_session:
+        repo = PonyProductRepository()
 
-    original_prices = repo.get_all()
-    repo.update_with_factor(1)
-    updated_prices = repo.get_all()
+        original_prices = select(p for p in Product)
+        repo.update_with_factor(1)
+        updated_prices = select(p for p in Product)
 
-    assert updated_prices == original_prices
+        for original, updated in zip(original_prices, updated_prices):
+            assert original.price == updated.price

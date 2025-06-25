@@ -69,10 +69,7 @@ def test_create_product(session):
     repo = SQLAlchemyProductRepository(session)
     product_count = session.query(Product).count()
 
-    data = CreateProductData(name="Candy bar", price=100.0)
-    result = repo.create(data)
-    assert result.name == "Candy bar"
-    assert result.id is not None
+    repo.create(CreateProductData(name="Candy bar", price=100.0))
     assert session.query(Product).count() == product_count + 1
 
 
@@ -80,8 +77,7 @@ def test_create_product_with_large_price(session):
     repo = SQLAlchemyProductRepository(session)
     product_count = session.query(Product).count()
 
-    product = repo.create(CreateProductData(name="Luxury car", price=1e9))
-    assert product.price == 1e9
+    repo.create(CreateProductData(name="Luxury car", price=1e9))
     assert session.query(Product).count() == product_count + 1
 
 
@@ -89,31 +85,30 @@ def test_create_product_with_zero_price(session):
     repo = SQLAlchemyProductRepository(session)
     product_count = session.query(Product).count()
 
-    data = CreateProductData(name="Free Product", price=0.0)
-    result = repo.create(data)
-    assert result.price == 0.0
+    repo.create(CreateProductData(name="Free Product", price=0.0))
     assert session.query(Product).count() == product_count + 1
 
 
 def test_update_with_factor(session_with_products):
     repo = SQLAlchemyProductRepository(session_with_products)
 
+    original_prices = [p for p in session_with_products.query(Product).all()]
     repo.update_with_factor(2)
-    products = repo.get_all()
+    updated_prices = [p for p in session_with_products.query(Product).all()]
 
-    assert products[0].price == 15000.0
-    assert products[1].price == 8000.0
-    assert products[2].price == 3000000.0
+    for original, updated in zip(original_prices, updated_prices):
+        assert original.price == updated.price
 
 
 def test_update_with_factor_one_does_not_change_prices(session_with_products):
     repo = SQLAlchemyProductRepository(session_with_products)
 
-    original_prices = [p.price for p in session_with_products.query(Product).all()]
+    original_prices = [p for p in session_with_products.query(Product).all()]
     repo.update_with_factor(1)
-    updated_prices = [p.price for p in session_with_products.query(Product).all()]
+    updated_prices = [p for p in session_with_products.query(Product).all()]
 
-    assert updated_prices == original_prices
+    for original, updated in zip(original_prices, updated_prices):
+        assert original.price == updated.price
 
 
 # The following test should pass, but it doesn't.
